@@ -16,7 +16,7 @@
 
 
 ## How to play/use the program?
-#### Just download the batch file from github and double-click on its icon (if you computer asks for permision its normal for batch file).
+#### Just download the batch file from github and double-click on its icon, if you computer asks for permision its normal for batch file.
 
 ## Como jugar/usar el programa?
-#### Descarga el archivo batch de github y has doble-click en su icono (si tu computador pide permisos es normal por ser archivo batch).
+#### Descarga el archivo batch de github y has doble-click en su icono, si tu computador pide permisos es normal por ser archivo batch.

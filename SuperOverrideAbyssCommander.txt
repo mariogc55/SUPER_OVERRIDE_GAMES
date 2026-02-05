@@ -1,0 +1,202 @@
+@echo off
+setlocal enabledelayedexpansion
+title SUPER OVERRIDE ABYSS - ABYSSAL COMMANDER
+:: Definimos un tamaño de ventana optimizado para el mapa grande
+mode con: cols=100 lines=40
+
+:boot
+cls
+color 0b
+echo.
+echo  [ SISTEMA SUPER OVERRIDE ABYSS V.7.0 - FINAL CORE ]
+echo.
+set "bar="
+for /l %%i in (1,1,30) do (
+    set "bar=!bar!I"
+    cls
+    echo.
+    echo  [ CARGANDO ENTORNO TACTICO DE ALTA DEFINICION ]
+    echo.
+    echo  -- DESPLEGANDO CAPAS DE RADAR: [!bar!]
+    ping -n 1 127.0.0.1 >nul
+)
+
+:menu
+cls
+color 0b
+echo.
+echo   ========================================================================================
+echo      S  U  P  E  R      O  V  E  R  R  I  D  E      A  B  Y  S  S      C  O  M  M  A  N  D
+echo   ========================================================================================
+echo.
+echo          [ SELECCION DE OPERACION ]
+echo.
+echo          1. INICIAR MISION: ABYSSAL COMMANDER (FULL SCREEN MAP)
+echo          2. TRES EN RAYA TACTICO
+echo          3. CODIGO DE ACCESO
+echo          4. MATRIX DECODER
+echo          5. ESCANER DE NODOS
+echo          6. TERMINAR TRABAJO POR LOTES (AUTODESTRUCCION)
+echo.
+echo   ========================================================================================
+set /p opt="COMMANDER_ID >> "
+
+if "%opt%"=="1" goto abyss_game
+if "%opt%"=="2" goto tictactoe
+if "%opt%"=="3" goto guessnum
+if "%opt%"=="4" goto matrix
+if "%opt%"=="5" goto scanner
+if "%opt%"=="6" goto self_destruct
+goto menu
+
+:abyss_game
+cls
+color 0b
+:: sx, sy = Submarino | tx, ty = Tesoro | ox, oy = Obstaculos
+set /a sx=25, sy=10, score=0, lives=3
+call :respawn_map
+
+:game_loop
+cls
+echo  OPERACION: ABYSSAL COMMANDER | TESOROS: %score% | INTEGRIDAD: %lives%0%%
+echo  [W,A,S,D + ENTER] Navegar | [M] Abortar Mision
+echo  -----------------------------------------------------------------------------------------
+
+:: MOTOR DE RENDERIZADO DE PANTALLA COMPLETA (50x20)
+:: Dibujamos el borde superior
+set "border=#"
+for /l %%i in (1,1,50) do set "border=!border!="
+echo !border!#
+
+for /l %%y in (1,1,20) do (
+    set "line=#"
+    for /l %%x in (1,1,50) do (
+        set "char= "
+        if %%x==%sx% if %%y==%sy% (set "char=S") else (
+            if %%x==%tx% if %%y==%ty% (set "char=$") else (
+                :: Verificación de 8 obstáculos aleatorios
+                for /l %%o in (1,1,8) do (
+                    if %%x==!ox%%o! if %%y==!oy%%o! set "char=X"
+                )
+            )
+        )
+        set "line=!line!!char!"
+    )
+    echo !line!#
+)
+echo !border!#
+
+:: Lógica de colisión con tesoro
+if %sx%==%tx% if %sy%==%ty% (
+    set /a score+=1
+    call :respawn_map
+    goto game_loop
+)
+
+:: Lógica de colisión con obstáculos (X)
+for /l %%o in (1,1,8) do (
+    if %sx%==!ox%%o! if %sy%==!oy%%o! goto collision
+)
+
+:: Input de usuario
+set "move="
+set /p "move=RUMBO_ACTUAL >> "
+if /i "%move%"=="M" goto menu
+if /i "%move%"=="W" set /a sy-=1
+if /i "%move%"=="S" set /a sy+=1
+if /i "%move%"=="A" set /a sx-=1
+if /i "%move%"=="D" set /a sx+=1
+
+:: Límites del mapa de pantalla completa
+if %sx% LSS 1 goto collision
+if %sx% GTR 50 goto collision
+if %sy% LSS 1 goto collision
+if %sy% GTR 20 goto collision
+goto game_loop
+
+:collision
+set /a lives-=1
+color 0c
+echo [!] IMPACTO DETECTADO. Perdiendo presion...
+ping -n 2 127.0.0.1 >nul
+if %lives% LEQ 0 (
+    echo [!] CASCO DESTRUIDO. FIN DE LA MISION.
+    pause
+    goto menu
+)
+set /a sx=25, sy=10
+color 0b
+goto game_loop
+
+:respawn_map
+:: Generar tesoro y 8 obstáculos en coordenadas de pantalla completa
+set /a tx=%random% %% 48 + 1, ty=%random% %% 18 + 1
+for /l %%i in (1,1,8) do (
+    set /a ox%%i=%random% %% 48 + 1, oy%%i=%random% %% 18 + 1
+)
+goto :eof
+
+:tictactoe
+:: (Mantenemos tu versión estable pero centrada)
+set "p1=1" & set "p2=2" & set "p3=3" & set "p4=4" & set "p5=5" & set "p6=6" & set "p7=7" & set "p8=8" & set "p9=9"
+set "turno=X" & set "ganador=NADA"
+:tt_loop
+cls & color 0e
+echo  TRES EN RAYA TACTICO - ABYSS
+echo  [ !p1! ] [ !p2! ] [ !p3! ]
+echo  [ !p4! ] [ !p5! ] [ !p6! ]
+echo  [ !p7! ] [ !p8! ] [ !p9! ]
+if not "!ganador!"=="NADA" (echo JUGADOR !ganador! GANA & pause & goto menu)
+echo  Turno de: !turno!
+set /p move="Posicion (1-9): "
+set "valido=0"
+for /l %%i in (1,1,9) do (if "%move%"=="%%i" if "!p%%i!"=="%%i" (set "p%%i=!turno!" & set "valido=1"))
+if "!valido!"=="0" goto tt_loop
+:: Lógica de victoria simplificada
+if "!p1!"=="!p2!" if "!p2!"=="!p3!" set "ganador=!p1!"
+if "!p4!"=="!p5!" if "!p5!"=="!p6!" set "ganador=!p4!"
+if "!p7!"=="!p8!" if "!p8!"=="!p9!" set "ganador=!p7!"
+if "!p1!"=="!p4!" if "!p4!"=="!p7!" set "ganador=!p1!"
+if "!p2!"=="!p5!" if "!p5!"=="!p8!" set "ganador=!p2!"
+if "!p3!"=="!p6!" if "!p6!"=="!p9!" set "ganador=!p3!"
+if "!p1!"=="!p5!" if "!p5!"=="!p9!" set "ganador=!p1!"
+if "!p3!"=="!p5!" if "!p5!"=="!p7!" set "ganador=!p3!"
+if not "!ganador!"=="NADA" goto tt_loop
+if "!turno!"=="X" (set "turno=O") else (set "turno=X")
+goto tt_loop
+
+:guessnum
+cls & color 0e
+set /a "target=(%random% %% 100) + 1", "intentos=10"
+:gn_loop
+cls
+echo [ ADIVINA EL CODIGO - 10 INTENTOS ]
+echo Intentos: %intentos%
+set /p "un=Codigo: "
+set /a "intentos-=1"
+if %un% EQU %target% (echo ACCESO CONCEDIDO & pause & goto menu)
+if %intentos% LEQ 0 (goto self_destruct)
+if %un% LSS %target% (echo ALTO) else (echo BAJO)
+ping -n 1 127.0.0.1 >nul
+goto gn_loop
+
+:matrix
+cls & color 02
+echo [ CTRL+C PARA SALIR ]
+:m_loop
+echo %random%%random%%random%%random%%random%%random%%random%
+ping -n 1 127.0.0.1 >nul
+goto m_loop
+
+:scanner
+cls & color 0b
+for /l %%i in (1,1,10) do (
+    echo BUSCANDO EN SECTOR 10.0.%%i... OK
+    ping -n 1 127.0.0.1 >nul
+)
+pause & goto menu
+
+:self_destruct
+color 0c
+for /l %%i in (5,-1,1) do (cls & echo SISTEMA CERRANDO EN %%i & ping -n 2 127.0.0.1 >nul)
+exit

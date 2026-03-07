@@ -24,4 +24,5 @@
 Micro-Space Batch v5
 use 1, 2, 3 to move and dodge the obstacles till the end
 
-<img width="980" height="515" alt="image" src="https://github.com/user-attachments/assets/aeec80b8-b60a-47e2-905c-3ceb8add9378" />
+<img width="403" height="245" alt="image" src="https://github.com/user-attachments/assets/a73adea0-6d56-400c-800f-5ef27b1943f6" />
+

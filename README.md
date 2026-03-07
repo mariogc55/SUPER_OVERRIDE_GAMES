@@ -20,3 +20,8 @@
 
 ## Como jugar/usar el programa?
 #### Descarga el archivo batch de github y has doble-click en su icono, si tu computador pide permisos es normal por ser archivo batch.
+
+Micro-Space Batch v5
+use 1, 2, 3 to move and dodge the obstacles till the end
+
+<img width="980" height="515" alt="image" src="https://github.com/user-attachments/assets/aeec80b8-b60a-47e2-905c-3ceb8add9378" />

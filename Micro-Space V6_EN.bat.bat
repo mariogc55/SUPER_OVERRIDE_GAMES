@@ -11,7 +11,7 @@ set "obs_step=0"
 :: Art definitions (Simplified for PowerShell compatibility)
 set "s1=    / \    "
 set "s2=   [---]   "
-set "s3=  /  -  \  "
+set "s3=  /_/_\_\  "
 set "a1=  .oooo.   "
 set "a2= dP'  'Yb  "
 set "a3= Yb.  .dP  "

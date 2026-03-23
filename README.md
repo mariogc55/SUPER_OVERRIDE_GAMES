@@ -21,11 +21,12 @@
 ## Como jugar/usar el programa?
 #### Descarga el archivo batch de github y has doble-click en su icono, si tu computador pide permisos es normal por ser archivo batch.
 
-## Micro-Space Batch v5
+## Micro-Space Batch v6
 #### use 1, 2, 3 to move and dodge the obstacles till the end
 
 #### use enter to move fordward
 
-<img width="403" height="245" alt="image" src="https://github.com/user-attachments/assets/a73adea0-6d56-400c-800f-5ef27b1943f6" />
+<img width="480" height="319" alt="image" src="https://github.com/user-attachments/assets/07fdd321-9269-4808-a6bf-5b80a2e0ce28" />
+
 
 #### super override abyss ultimate comander2 is not finished

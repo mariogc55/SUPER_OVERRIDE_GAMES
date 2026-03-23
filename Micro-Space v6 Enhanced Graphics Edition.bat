@@ -1,6 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
-title Micro-Space v6.2
+title Micro-Space Batch v6 - Deluxe Edition
 
 set "ship_pos=2"
 set "distance=0"
@@ -8,15 +8,9 @@ set "goal=50"
 set "obs_pos=0"
 set "obs_step=0"
 
-set "s1=    / \    "
-set "s2=   [---]   "
-set "s3=  /  -  \  "
-set "a1=  .oooo.   "
-set "a2= dP'  'Yb  "
-set "a3= Yb.  .dP  "
-set "blank=           "
-
+:game_loop
 cls
+
 set /a "distance+=1"
 set /a "obs_step+=1"
 
@@ -25,43 +19,53 @@ if %obs_step% GTR 2 (
     set /a "obs_pos=(%random% %% 3) + 1"
 )
 
-set "r1_1=%blank%" & set "r1_2=%blank%" & set "r1_3=%blank%"
-set "r2_1=%blank%" & set "r2_2=%blank%" & set "r2_3=%blank%"
-set "r3_1=%blank%" & set "r3_2=%blank%" & set "r3_3=%blank%"
-
-if %obs_step%==1 (
-    if %obs_pos%==1 set "r1_1=%a1%" & set "r1_2=%a2%" & set "r1_3=%a3%"
-    if %obs_pos%==2 set "r2_1=%a1%" & set "r2_2=%a2%" & set "r2_3=%a3%"
-    if %obs_pos%==3 set "r3_1=%a1%" & set "r3_2=%a2%" & set "r3_3=%a3%"
+:: Clear the grid layers
+for /l %%i in (1,1,3) do (
+    set "rt%%i=           "
+    set "st%%i=           "
 )
 
-set "s1_1=%blank%" & set "s1_2=%blank%" & set "s1_3=%blank%"
-set "s2_1=%blank%" & set "s2_2=%blank%" & set "s2_3=%blank%"
-set "s3_1=%blank%" & set "s3_2=%blank%" & set "s3_3=%blank%"
+:: --- OBSTACLE ART (Asteroid) ---
+if %obs_step%==1 (
+    if %obs_pos%==1 set "rt1=  .oooo.   " & set "rt2= dP'  `Yb  " & set "rt3= Yb.  .dP  "
+    if %obs_pos%==2 set "rt1=  .oooo.   " & set "rt2= dP'  `Yb  " & set "rt3= Yb.  .dP  "
+    if %obs_pos%==3 set "rt1=  .oooo.   " & set "rt2= dP'  `Yb  " & set "rt3= Yb.  .dP  "
+)
 
-if %ship_pos%==1 set "s1_1=%s1%" & set "s1_2=%s2%" & set "s1_3=%s3%"
-if %ship_pos%==2 set "s2_1=%s1%" & set "s2_2=%s2%" & set "s2_3=%s3%"
-if %ship_pos%==3 set "s3_1=%s1%" & set "s3_2=%s2%" & set "s3_3=%s3%"
+:: --- SHIP ART (Spaceship) ---
+set "s_line1=    / \    "
+set "s_line2=   |---|   "
+set "s_line3=  /_/ \_\  "
 
+if %ship_pos%==1 set "st1=%s_line1%" & set "st2=%s_line2%" & set "st3=%s_line3%"
+if %ship_pos%==2 set "st1=%s_line1%" & set "st2=%s_line2%" & set "st3=%s_line3%"
+if %ship_pos%==3 set "st1=%s_line1%" & set "st2=%s_line2%" & set "st3=%s_line3%"
+
+:: --- RENDER SCREEN ---
 echo.
 echo    PROGRESS: [ %distance% / %goal% ]
 echo   =========================================
 echo           [1]           [2]           [3]
 echo   _________________________________________
-echo   : %r1_1% : %r2_1% : %r3_1% :
-echo   : %r1_2% : %r2_2% : %r3_2% :  RADAR
-echo   : %r1_3% : %r2_3% : %r3_3% :
-echo   :...........:...........:...........:
-echo   : %s1_1% : %s2_1% : %s3_1% :
-echo   : %s1_2% : %s2_2% : %s3_2% :  SHIP
-echo   : %s1_3% : %s2_3% : %s3_3% :
+echo   I %rt1% I %rt1% I %rt1% I
+echo   I %rt2% I %rt2% I %rt2% I ^<-- RADAR
+echo   I %rt3% I %rt3% I %rt3% I
+echo   I-----------I-----------I-----------I
+echo   I %st1% I %st2% I %st3% I
+echo   I %st1% I %st2% I %st3% I ^<-- YOUR SHIP
+echo   I %st1% I %st2% I %st3% I
 echo   =========================================
 echo.
+
+:: Note: The logic for rendering the specific lane for the ship 
+:: was slightly adjusted in the echo lines to match the variables.
 
 if %obs_step%==2 (
     if %obs_pos%==%ship_pos% (
         echo.
-        echo   [!] COLLISION [!]
+        echo   [!] COLLISION DETECTED [!]
+        echo   Your ship was crushed by an asteroid in lane %ship_pos%.
+        echo.
         pause
         exit
     )
@@ -70,11 +74,12 @@ if %obs_step%==2 (
 if %distance% GEQ %goal% (
     echo.
     echo   [#] MISSION ACCOMPLISHED [#]
+    echo   You have successfully navigated the field!
     pause
     exit
 )
 
-echo COMMANDS: [1, 2, 3] to move - [ENTER] to fly
+echo COMMANDS: [1, 2, 3] to move | [ENTER] to stay
 set "input="
 set /p "input=>>> "
 

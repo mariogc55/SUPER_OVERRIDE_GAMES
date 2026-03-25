@@ -26,7 +26,14 @@
 
 #### use enter to move fordward
 
+#### usa 1, 2, 3 para mover la nave y esquivar los obstaculos hasta llegar al final
+
+#### usar Enter para avanzar
+
 <img width="480" height="319" alt="image" src="https://github.com/user-attachments/assets/07fdd321-9269-4808-a6bf-5b80a2e0ce28" />
+
+
+
 
 
 #### super override abyss ultimate comander2 is not finished

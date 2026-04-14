@@ -3,12 +3,12 @@ setlocal enabledelayedexpansion
 title Micro-Space v7 - Deep Space
 
 set "ship_pos=2"
-set "distance=0"
-set "goal=50"
+set "distancia=0"
+set "meta=50"
 set "obs_pos=0"
 set "obs_step=0"
 
-:: Art definitions
+:: Art
 set "s1=    / \    "
 set "s2=   [---]   "
 set "s3=  /_/_\_\  "
@@ -19,23 +19,23 @@ set "blank=           "
 
 :game_loop
 cls
-set /a "distance+=1"
+set /a "distancia+=1"
 set /a "obs_step+=1"
 
-:: Cycle: 1(Far), 2(Mid), 3(Near), 4(Collision Check/Reset)
+:: Ciclo: 1(Far), 2(Mid), 3(Near), 4(Collision Check/Reset)
 if %obs_step% GTR 4 (
     set /a "obs_step=1"
     set /a "obs_pos=(%random% %% 3) + 1"
 )
 
-:: Clear all radar rows
+:: limpiar radar
 for /l %%i in (1,1,3) do (
     for /l %%j in (1,1,3) do (
         set "r%%i_%%j=%blank%"
     )
 )
 
-:: Assign Asteroid based on its current step
+:: asignar asteroide
 if %obs_step%==1 (
     if %obs_pos%==1 (set "r1_1=%a1%" & set "r1_2=%a2%" & set "r1_3=%a3%")
     if %obs_pos%==2 (set "r2_1=%a1%" & set "r2_2=%a2%" & set "r2_3=%a3%")
@@ -61,7 +61,7 @@ if %obs_step%==3 (
     set "n3_1=%blank%" & set "n3_2=%blank%" & set "n3_3=%blank%"
 )
 
-:: Ship Setup
+:: configuracion nave
 set "s1_1=%blank%" & set "s1_2=%blank%" & set "s1_3=%blank%"
 set "s2_1=%blank%" & set "s2_2=%blank%" & set "s2_3=%blank%"
 set "s3_1=%blank%" & set "s3_2=%blank%" & set "s3_3=%blank%"
@@ -71,7 +71,7 @@ if %ship_pos%==3 (set "s3_1=%s1%" & set "s3_2=%s2%" & set "s3_3=%s3%")
 
 :: --- RENDER ---
 echo.
-echo    PROGRESO: [ %distance% / %goal% ]
+echo    PROGRESO: [ %distancia% / %meta% ]
 echo   =========================================
 echo           [1]           [2]           [3]
 echo   _________________________________________
@@ -96,20 +96,20 @@ echo.
 if %obs_step%==4 (
     if %obs_pos%==%ship_pos% (
         echo.
-        echo   [#] COLLISION Detectada [#]
+        echo   [#] COLISION DETECTADA[#]
         pause
         exit
     )
 )
 
-if %distance% GEQ %goal% (
+if %distancia% GEQ %meta% (
     echo.
     echo   [#] MISION COMPLETADA [#]
     pause
     exit
 )
 
-echo COMMANDS: [1, 2, 3] para moverse - [ENTER] para avanzar
+echo COMANDOS: [1, 2, 3] para moverse - [ENTER] para avanzar
 set "input="
 set /p "input=>>> "
 

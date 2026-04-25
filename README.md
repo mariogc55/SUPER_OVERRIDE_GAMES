@@ -32,7 +32,10 @@
 
 <img width="480" height="319" alt="image" src="https://github.com/user-attachments/assets/07fdd321-9269-4808-a6bf-5b80a2e0ce28" />
 
+## Micro-Space Batch v7
+#### Same game, more vision
 
+<img width="671" height="475" alt="image" src="https://github.com/user-attachments/assets/d6c3b1e5-4f60-45ba-bbe4-3375fed290ff" />
 
 
 

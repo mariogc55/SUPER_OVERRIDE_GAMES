@@ -43,5 +43,6 @@
 <img width="536" height="259" alt="image" src="https://github.com/user-attachments/assets/e419c482-a040-4803-9baf-a08f751bd0cc" />
 <img width="512" height="261" alt="image" src="https://github.com/user-attachments/assets/cf44d70c-b617-4c4a-823c-f61a9c25dd55" />
 
-
+## Batch knight 2: The Shadow Realm
+<img width="476" height="336" alt="image" src="https://github.com/user-attachments/assets/88feeb92-4370-4b1e-bcf9-a46b2797c2cb" />
 

@@ -38,5 +38,10 @@
 <img width="671" height="475" alt="image" src="https://github.com/user-attachments/assets/d6c3b1e5-4f60-45ba-bbe4-3375fed290ff" />
 
 
+## Batch knight: press enter to move, collect gold to buy potions of health and fight goblins
 
-#### super override abyss ultimate comander2 is not finished
+<img width="536" height="259" alt="image" src="https://github.com/user-attachments/assets/e419c482-a040-4803-9baf-a08f751bd0cc" />
+<img width="512" height="261" alt="image" src="https://github.com/user-attachments/assets/cf44d70c-b617-4c4a-823c-f61a9c25dd55" />
+
+
+

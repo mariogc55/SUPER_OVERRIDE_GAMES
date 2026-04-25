@@ -46,3 +46,4 @@
 ## Batch knight 2: The Shadow Realm
 <img width="476" height="336" alt="image" src="https://github.com/user-attachments/assets/88feeb92-4370-4b1e-bcf9-a46b2797c2cb" />
 
+<img width="501" height="332" alt="image" src="https://github.com/user-attachments/assets/c5b0b746-7d12-4242-b528-aeb1fabb2d11" />
